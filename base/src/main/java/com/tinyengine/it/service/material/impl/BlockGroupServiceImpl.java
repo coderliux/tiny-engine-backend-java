@@ -33,7 +33,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -164,7 +163,7 @@ public class BlockGroupServiceImpl implements BlockGroupService {
      * @return insert number
      */
     @Override
-    public Result<List<BlockGroup>> createBlockGroup(BlockGroup blockGroup) {
+    public Result<BlockGroup> createBlockGroup(BlockGroup blockGroup) {
         List<BlockGroupDto> blockGroupsList = blockGroupMapper.queryBlockGroupByCondition(blockGroup);
         if (blockGroupsList.isEmpty()) {
             blockGroupMapper.createBlockGroup(blockGroup);
@@ -173,7 +172,7 @@ public class BlockGroupServiceImpl implements BlockGroupService {
         }
         // 页面返回数据显示
         BlockGroup blockGroupResult = findBlockGroupById(blockGroup.getId());
-        return Result.success(Collections.singletonList(blockGroupResult));
+        return Result.success(blockGroupResult);
     }
 
     /**
@@ -202,7 +201,7 @@ public class BlockGroupServiceImpl implements BlockGroupService {
             blockGroupsListResult = blockGroupMapper.queryBlockGroupByAppId(appId, blockCreatedBy, groupCreatedBy);
         }
         if (ids == null && appId == null) {
-            blockGroupsListResult = blockGroupMapper.queryAllBlockGroupAndBlock( blockCreatedBy, groupCreatedBy);
+            blockGroupsListResult = blockGroupMapper.queryAllBlockGroupAndBlock(blockCreatedBy, groupCreatedBy);
         }
 
         if (blockGroupsListResult.isEmpty() || blockGroupsListResult.get(0).getId() == null) {
@@ -213,7 +212,7 @@ public class BlockGroupServiceImpl implements BlockGroupService {
             for (Block block : blockGroupTemp.getBlocks()) {
                 BlockCarriersRelation queryParam = new BlockCarriersRelation();
                 queryParam.setBlockId(block.getId());
-                queryParam.setHostId(blockGroup.getId());
+                queryParam.setHostId(blockGroupTemp.getId());
                 queryParam.setHostType(Enums.BlockGroup.BLOCK_GROUP.getValue());
                 List<BlockCarriersRelation> blockCarriersRelations = blockCarriersRelationMapper.queryBlockCarriersRelationByCondition(queryParam);
                 if (blockCarriersRelations.isEmpty()) {

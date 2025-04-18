@@ -24,8 +24,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -86,14 +84,14 @@ public class App extends BaseEntity {
 
     @Schema(name = "config", description = "*设计预留字段*")
     @TableField(typeHandler = MapTypeHandler.class)
-    private Map<String, Object> config = new HashMap<>();
+    private Map<String, Object> config;
 
     @Schema(name = "constants", description = "*设计预留字段*")
     private String constants;
 
     @Schema(name = "dataHandler", description = "数据源的拦截器")
     @TableField(typeHandler = MapTypeHandler.class)
-    private Map<String, Object> dataHandler = new HashMap<>();
+    private Map<String, Object> dataHandler;
 
     @Schema(name = "description", description = "描述")
     private String description;
@@ -134,14 +132,14 @@ public class App extends BaseEntity {
     @Schema(name = "globalState", description = "应用全局状态")
     @JsonProperty("global_state")
     @TableField(typeHandler = ListTypeHandler.class)
-    private List<Map<String, Object>> globalState = new ArrayList<>();
+    private List<Map<String, Object>> globalState;
 
     @Schema(name = "defaultLang", description = "默认语言")
     private String defaultLang;
 
     @Schema(name = "extendConfig", description = "应用扩展config")
     @TableField(typeHandler = MapTypeHandler.class)
-    private Map<String, Object> extendConfig = new HashMap<>();
+    private Map<String, Object> extendConfig;
 
     @Schema(name = "dataHash", description = "应用内容哈希值")
     private String dataHash;
@@ -152,5 +150,5 @@ public class App extends BaseEntity {
     @Schema(name = "dataSourceGlobal", description = "数据源全局配置")
     @JsonProperty("data_source_global")
     @TableField(typeHandler = MapTypeHandler.class)
-    private Map<String, Object> dataSourceGlobal = new HashMap<>();
+    private Map<String, Object> dataSourceGlobal;
 }
